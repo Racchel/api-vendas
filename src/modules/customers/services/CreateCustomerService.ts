@@ -6,11 +6,10 @@ import CustomerRepository from '../typeorm/repository/CustomerRepository';
 interface IRequest {
   name: string;
   email: string;
-  password: string;
 }
 
 class CreateCustomerService {
-  public async execute({ name, email, password }: IRequest): Promise<Customer> {
+  public async execute({ name, email }: IRequest): Promise<Customer> {
     const customersRepository = getCustomRepository(CustomerRepository);
     const emailExists = await customersRepository.findByEmail(email);
 
