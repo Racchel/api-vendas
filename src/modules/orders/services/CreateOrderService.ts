@@ -1,9 +1,10 @@
-import AppError from '@shared/errors/AppError';
-import Order from '../typeorm/entites/Order';
-import { getCustomRepository } from 'typeorm';
-import OrdersRepository from '../typeorm/repositories/OrdersRepository';
-import CustomerRepository from '@modules/customers/typeorm/repositories/CustomerRepository';
+import CustomersRepository from '@modules/customers/typeorm/repositories/CustomersRepository';
 import { ProductRepository } from '@modules/products/typeorm/repositories/ProductRepository';
+
+import AppError from '@shared/errors/AppError';
+import { getCustomRepository } from 'typeorm';
+import Order from '../typeorm/entities/Order';
+import OrdersRepository from '../typeorm/repositories/OrdersRepository';
 
 interface IProduct {
   id: string;
@@ -18,7 +19,7 @@ interface IRequest {
 class CreateOrderService {
   public async execute({ customer_id, products }: IRequest): Promise<Order> {
     const ordersRepository = getCustomRepository(OrdersRepository);
-    const customersRepository = getCustomRepository(CustomerRepository);
+    const customersRepository = getCustomRepository(CustomersRepository);
     const productsRepository = getCustomRepository(ProductRepository);
 
     const customerExists = await customersRepository.findById(customer_id);
@@ -74,7 +75,7 @@ class CreateOrderService {
     const updatedProductQuantity = order_products.map(product => ({
       id: product.product_id,
       quantity:
-        existsProducts.filter(p => p.id === product.id)[0].quantity -
+        existsProducts.filter(p => p.id === product.product_id)[0].quantity -
         product.quantity,
     }));
 

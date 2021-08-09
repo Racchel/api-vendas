@@ -12,7 +12,7 @@ import Order from './Order';
 import Product from '@modules/products/typeorm/entities/Product';
 
 @Entity('orders_products')
-class OrderProducts {
+class OrdersProducts {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,7 +20,7 @@ class OrderProducts {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @ManyToOne(() => Product, product => product)
+  @ManyToOne(() => Product, product => product.order_products)
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
@@ -43,4 +43,4 @@ class OrderProducts {
   updated_at: Date;
 }
 
-export default OrderProducts;
+export default OrdersProducts;

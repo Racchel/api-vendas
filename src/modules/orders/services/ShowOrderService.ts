@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
-import Order from '../typeorm/entites/Order';
 import { getCustomRepository } from 'typeorm';
+import Order from '../typeorm/entities/Order';
 import OrdersRepository from '../typeorm/repositories/OrdersRepository';
 
 interface IRequest {
@@ -16,6 +16,7 @@ class ShowOrderService {
     if (!order) {
       throw new AppError('Order not found.');
     }
+
     return order;
   }
 }
